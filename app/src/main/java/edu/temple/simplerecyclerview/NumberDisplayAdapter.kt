@@ -9,12 +9,19 @@ import androidx.recyclerview.widget.RecyclerView
 // TODO(Step 1: Implement click behavior)
 
 // TODO (Step 1a: Accept lambda in constructor)
-class NumberDisplayAdapter (private val numbers: Array<Int>) : RecyclerView.Adapter<NumberDisplayAdapter.NumberViewHolder>() /* Step 3a: Provide Adapter Parent */ {
+class NumberDisplayAdapter (private val _numbers: Array<Int>, _callback: (Int)->Unit) : RecyclerView.Adapter<NumberDisplayAdapter.NumberViewHolder>() /* Step 3a: Provide Adapter Parent */ {
+
+    private val numbers = _numbers
+    private val callback = _callback
 
     // TODO (Step 1b: Invoke lambda via onClickListener)
     inner class NumberViewHolder (layout: View) : RecyclerView.ViewHolder (layout) {
         // enumerate views inside layout
         val textView = layout.findViewById<TextView>(R.id.textView)
+
+        init{
+            textView.setOnClickListener {callback(numbers[adapterPosition])}
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NumberViewHolder {
